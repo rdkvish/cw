@@ -36,7 +36,7 @@ public class UserInfoService {
         }
     }
 
-    public SearchResponse findUserInfoByMobile(String mobileNumber){
+    public ResponseEntity<SearchResponse> findUserInfoByMobile(String mobileNumber){
         UserInfo userInfo = userInfoRepository.findUserInfoByMobile(mobileNumber);
         SearchResponse searchResponse = new SearchResponse();
         if(null != userInfo){
@@ -44,6 +44,17 @@ public class UserInfoService {
         } else {
             searchResponse.setExists(false);
         }
-        return searchResponse;
+        return new ResponseEntity<>(searchResponse, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<SearchResponse> findUserInfoByOtp(String otp){
+        UserInfo userInfo = userInfoRepository.findUserInfoByOtp(otp);
+        SearchResponse searchResponse = new SearchResponse();
+        if(null != userInfo){
+            searchResponse.setExists(true);
+        } else {
+            searchResponse.setExists(false);
+        }
+        return new ResponseEntity<>(searchResponse, new HttpHeaders(), HttpStatus.OK);
     }
 }

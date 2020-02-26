@@ -23,8 +23,13 @@ public class UserInfoController {
 		return userInfoService.addUserInformation(userInfo, ucBuilder);
 	}
 
-	@GetMapping(path="/mobile")
-	public @ResponseBody SearchResponse checkOtpExists(@RequestParam String number) {
+	@GetMapping(path="/mobile/{number}")
+	public ResponseEntity<SearchResponse> checkMobileExists(@PathVariable("number") String number) {
 		return userInfoService.findUserInfoByMobile(number);
+	}
+
+	@GetMapping(path="/otp/{otp}")
+	public ResponseEntity<SearchResponse> checkOtpExists(@PathVariable("otp") String otp) {
+		return userInfoService.findUserInfoByOtp(otp);
 	}
 }
